@@ -1,0 +1,149 @@
+//Productions from §15 (Expressions)
+
+Primary:
+PrimaryNoNewArray
+ArrayCreationExpression
+PrimaryNoNewArray:
+Literal
+ClassLiteral
+this
+TypeName . this
+( Expression )
+ClassInstanceCreationExpression
+FieldAccess
+ArrayAccess
+MethodInvocation
+ClassLiteral:
+TypeName {"[" "]"} . class
+NumericType {"[" "]"} . class
+boolean {"[" "]"} . class
+void . class
+ClassInstanceCreationExpression:
+UnqualifiedClassInstanceCreationExpression
+ExpressionName . UnqualifiedClassInstanceCreationExpression
+Primary . UnqualifiedClassInstanceCreationExpression
+UnqualifiedClassInstanceCreationExpression:
+new ClassOrInterfaceTypeToInstantiate ( [ArgumentList] ) [ClassBody]
+ClassOrInterfaceTypeToInstantiate:
+Identifier {. Identifier}
+FieldAccess:
+Primary . Identifier
+super . Identifier
+TypeName . super . Identifier
+ArrayAccess:
+ExpressionName "[" Expression "]"
+PrimaryNoNewArray "[" Expression "]"
+MethodInvocation:
+MethodName ( [ArgumentList] )
+TypeName . Identifier ( [ArgumentList] )
+ExpressionName . Identifier ( [ArgumentList] )
+Primary . Identifier ( [ArgumentList] )
+super . Identifier ( [ArgumentList] )
+TypeName . super . Identifier ( [ArgumentList] )
+ArgumentList:
+Expression {, Expression}
+ArrayCreationExpression:
+new PrimitiveType DimExprs [Dims]
+new ClassOrInterfaceType DimExprs [Dims]
+new PrimitiveType Dims ArrayInitializer
+new ClassOrInterfaceType Dims ArrayInitializer
+DimExprs:
+DimExpr {DimExpr}
+DimExpr:
+"[" Expression "]"
+Expression:
+AssignmentExpression
+AssignmentExpression:
+ConditionalExpression
+Assignment
+Assignment:
+LeftHandSide AssignmentOperator Expression
+LeftHandSide:
+ExpressionName
+FieldAccess
+ArrayAccess
+AssignmentOperator:
+"="
+"*="
+"/="
+"%="
+"+="
+"-="
+"<<="
+">>="
+">>>="
+"&="
+"^="
+"|="
+ConditionalExpression:
+ConditionalOrExpression
+ConditionalOrExpression ? Expression ":" ConditionalExpression
+ConditionalOrExpression:
+ConditionalAndExpression
+ConditionalOrExpression "||" ConditionalAndExpression
+ConditionalAndExpression:
+InclusiveOrExpression
+ConditionalAndExpression "&&" InclusiveOrExpression
+InclusiveOrExpression:
+ExclusiveOrExpression
+InclusiveOrExpression | ExclusiveOrExpression
+ExclusiveOrExpression:
+AndExpression
+ExclusiveOrExpression ^ AndExpression
+AndExpression:
+EqualityExpression
+AndExpression & EqualityExpression
+EqualityExpression:
+RelationalExpression
+EqualityExpression "==" RelationalExpression
+EqualityExpression "!=" RelationalExpression
+RelationalExpression:
+ShiftExpression
+RelationalExpression < ShiftExpression
+RelationalExpression > ShiftExpression
+RelationalExpression "<=" ShiftExpression
+RelationalExpression ">=" ShiftExpression
+RelationalExpression instanceof ReferenceType
+ShiftExpression:
+AdditiveExpression
+ShiftExpression "<<" AdditiveExpression
+ShiftExpression ">>" AdditiveExpression
+ShiftExpression ">>>" AdditiveExpression
+AdditiveExpression:
+MultiplicativeExpression
+AdditiveExpression + MultiplicativeExpression
+AdditiveExpression - MultiplicativeExpression
+MultiplicativeExpression:
+UnaryExpression
+MultiplicativeExpression * UnaryExpression
+MultiplicativeExpression / UnaryExpression
+MultiplicativeExpression % UnaryExpression
+UnaryExpression:
+PreIncrementExpression
+PreDecrementExpression
++ UnaryExpression
+- UnaryExpression
+UnaryExpressionNotPlusMinus
+PreIncrementExpression:
+"++" UnaryExpression
+PreDecrementExpression:
+"--" UnaryExpression
+UnaryExpressionNotPlusMinus:
+PostfixExpression
+~ UnaryExpression
+! UnaryExpression
+CastExpression
+PostfixExpression:
+Primary
+ExpressionName
+PostIncrementExpression
+PostDecrementExpression
+PostIncrementExpression:
+PostfixExpression "++"
+PostDecrementExpression:
+PostfixExpression "--"
+CastExpression:
+( PrimitiveType ) UnaryExpression
+( ReferenceType ) UnaryExpressionNotPlusMinus
+ConstantExpression:
+Expression

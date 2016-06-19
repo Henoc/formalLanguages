@@ -1,6 +1,9 @@
+import java.nio.file.Paths
+
 import org.scalatest.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
+import scala.io.Source
 import scala.util.parsing.input.CharSequenceReader
 
 /**
@@ -8,7 +11,7 @@ import scala.util.parsing.input.CharSequenceReader
   */
 class JavaGrammarParsersSuite extends FunSuite{
   import ASTTranslators._
-  test("Java grammar parsing"){
+  test("Some grammar parsing"){
     implicit val parser = new JavaGrammarParsers
 
       """
@@ -32,8 +35,16 @@ class JavaGrammarParsersSuite extends FunSuite{
         |
       """.stripMargin.parse.map(_.removeIndirectLeftRecursion()).map(_.peekingPrint()).map(_.removeDirectLeftRecursion()).map(_.peekingPrint())
       .map(_.methodNPeekingPrint())
+  }
 
-
+  test("Java grammar parsing"){
+    implicit val parser = new JavaGrammarParsers
+    Source.fromFile(Paths.get("src","main","resources","javaGrammarExpressions.txt").toFile).mkString.parse
+      //.map(_.peekingPrint())
+      //.map(_.removeIndirectLeftRecursion())
+      .map(_.removeDirectLeftRecursion())
+      .map(_.peekingPrint())
+      //.map(_.methodNPeekingPrint())
   }
 
   implicit class Parseable(code : String){
